@@ -8,6 +8,7 @@ public class Point implements Serializable {
     private String r;
     private String x;
     private String y;
+    private Boolean hit;
 
     public Point() {
         System.out.println("Starting Point...");
@@ -27,7 +28,7 @@ public class Point implements Serializable {
         return r;
     }
 
-
+    public Boolean getHit() { return hit; }
 
     public void setX(String x) {
         this.x = x;
@@ -41,14 +42,33 @@ public class Point implements Serializable {
         this.r = r;
     }
 
+    public void setHit(){
+        double x;
+        double y;
+        double r;
+        try {
+            x = Double.parseDouble(this.x.replace(',', '.'));
+            y = Double.parseDouble(this.y.replace(',', '.'));
+            r = Double.parseDouble(this.r.replace(',', '.'));
+        } catch (Exception e) {
+            this.hit= false;
+            return;
+        }
+        if (    (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
+                (x <= 0 && y >= 0 && Math.abs(x)<=(r/2) && y<=r) ||
+                (x <= 0 && y <= 0 && y>=-x-r)
+        ){
+            this.hit = true;
+        } else this.hit = false;
+    }
 
     private String getSayCoords() {
         if ("".equals(r) || r == null || "".equals(y) || y == null || "".equals(x) || x == null) {
             //check if null?
             return "";
         } else {
-
-            return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y;
+            this.setHit();
+            return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y+"\nhit: "+hit;
         }
     }
 
