@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Lab3 JSF Application</title>
+    <link href="resources/css/Style.css" rel="stylesheet"> </link>
+    <h:outputScript library="js" name="check.js"/>
+    <h:outputScript name="jquery.js" library="js"/>
+    <h:outputScript name="clock.js" library="js"/>
+</head>
+
+<h:body>
+    <table width="85%" border="0" align="center">
+        <tr>
+            <td><h1>Лабораторная работа 3 Базаровой Анны Вариант 65214 </h1></td>
+        </tr>
+    </table>
+    <table width="85%" border="0" align="center">
+        <tr>
+            <td width="30%">
+                <span style="text-align: center;">
+                            <canvas id="clock" title="Часы" width="300px" height="300px"/>
+                </span>
+                <h:form>
+                    <h:commandButton action="home" value="Перейти на основную страницу"
+                                     ajax="false" styleClass="check-button"/>
+                </h:form>
+            </td>
+            <td width="70%">
+                <marquee behavior="scroll" direction="right" loop="10000" scrollamount="10"><img alt="nyancat"
+                                                                                                 src="images/nyan.png"
+                                                                                                 style="max-height:200px;"> </img>
+                </marquee>
+            </td>
+        </tr>
+    </table>
+</h:body>
+</html>

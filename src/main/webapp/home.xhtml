@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Lab3 JSF Application</title>
+    <link href="resources/css/Style.css" rel="stylesheet"> </link>
+    <h:outputScript library="js" name="check.js"/>
+    <h:outputScript name="clock.js" library="js"/>
+</head>
+
+<h:body>
+    <table width="85%" border="0" align="center">
+        <tr>
+            <td><h1>Лабораторная работа 3 Базаровой Анны Вариант 65214 </h1></td>
+        </tr>
+    </table>
+    <table width="85%" border="1" align="center">
+        <tr>
+            <td>
+                <h:form>
+                    <table border="1" width="100%">
+                        <tr>
+                            <td width="50%">
+                                <p><b>Выберите X</b></p>
+                                <h:selectOneRadio id="x" name="x" value="#{Point.x}">
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2.5" itemLabel="2.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <span class="whitespace">    </span>
+                                </h:selectOneRadio>
+                            </td>
+
+                            <td rowspan="2">здесь будет канвас</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <p><b>Выберите Y</b></p>
+
+                                <h:inputText id="y" value="#{Point.y}"> </h:inputText>
+
+                                <p><b>Выберите R</b></p>
+
+                                <h:selectOneRadio id="r" name="r" value="#{Point.r}">
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="2.5" itemLabel="2.5"/>
+                                    <span class="whitespace">    </span>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <span class="whitespace">    </span>
+                                </h:selectOneRadio>
+
+                                <h:commandButton value="Get my coords!">
+                                    <f:ajax render="output"/>
+                                </h:commandButton>
+                                <h2>
+                                    <h:outputText id="output" value="#{Point.showCurrent}"/>
+                                </h2>
+                            </td>
+                        </tr>
+                    </table>
+                </h:form></td>
+        </tr>
+
+        <!--Return button-->
+        <tr>
+            <td>
+                <h:form>
+                    <h:commandButton action="index" value="Хочу дальше залипать на котиков и часики"
+                                     ajax="false" styleClass="check-button"/>
+                </h:form>
+            </td>
+        </tr>
+        <tr><td>здесь будет таблица результатов</td></tr>
+    </table>
+
+
+</h:body>
+
+</html>
