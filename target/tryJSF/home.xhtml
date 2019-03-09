@@ -44,7 +44,7 @@
 
                             <td rowspan="2">
                                 <!--здесь будет канвас-->
-                                <canvas height="400" width="400" id="graph" name="graph" onclick="interract()" class="graph"/>
+                                <canvas height="400" width="400" id="graph" name="graph" onclick="interract('${Point.r}')" class="graph"/>
                                 <script>window.onload = function (ev) {
 
                                     draw('graph');
@@ -74,7 +74,7 @@
                                     <span class="whitespace">    </span>
                                 </h:selectOneRadio>
 
-                                <h:commandButton value="Get my coords!">
+                                <h:commandButton value="Get my coords!" onclick="validation('${Point.x}','${Point.y}','${Point.r}')">
                                     <f:ajax render="output"/>
                                 </h:commandButton>
                                 <h2>

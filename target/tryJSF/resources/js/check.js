@@ -1,9 +1,30 @@
-function validation() {
-
+function validation(x,y,r) {
+    let newy=y.replace(/,/g, '.');
+    let newx=x.replace(/,/g, '.');
+    let newr=r.replace(/,/g, '.');
+    drawPoint('graph', newx, newy, newr);
 }
 
-function interract(){
+function interract(r){
+    let canvas = document.getElementById("graph");
+    let event = window.event;
+    let pos = getMousePos(canvas, event);
 
+    let newR = r.replace(/,/g, '.');
+    document.getElementById('R').value = newR;
+    let arrr = r.split('');
+
+    let msgr = '';
+
+    if (isNaN(r) || r < 1 || r > 3 || r === " " || arrr[0] === '.' || r === '') {
+        msgr += 'Input number between 1 and 3';
+        document.getElementById('errR').style.visibility = 'visible';
+        document.getElementById('errR').innerHTML = msgr;
+    } else {
+        let x = Math.round(((pos.x - 200) * r) / 140 * 10) / 10;
+        let y = Math.round(((-pos.y + 200) * r) / 140 * 10) / 10;
+        validation(x,y,r);
+    }
 }
 
 function draw(canv) {
@@ -95,15 +116,6 @@ function draw(canv) {
     ctx.fillText('X', 370, 225);
 }
 
-
-
-window.onkeydown = function (e) {
-    let code = e.key;
-    if (code === 'Enter') {
-        validation();
-    }
-};
-
 function getMousePos(canvas, evt) {
     let rect = canvas.getBoundingClientRect();
     return {
@@ -111,9 +123,6 @@ function getMousePos(canvas, evt) {
         y: evt.clientY - rect.top
     };
 }
-
-
-
 
 function drawPoint(canv, x, y, r) {
     let ctx = document.getElementById(canv).getContext("2d");
@@ -146,7 +155,7 @@ function drawPoint(canv, x, y, r) {
             ctx.beginPath();
             ctx.arc(Math.round(200 + ((x / r) * 140)), Math.round(200 - ((y / r) * 140)), 3, 0, Math.PI * 2);
             ctx.closePath();
-            if (    (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
+            if (     (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
                 (x <= 0 && y >= 0 && Math.abs(x)<=(r/2) && y<=r) ||
                 (x <= 0 && y <= 0 && y>=-x-r)
             ){//костыль для зеленых точек
