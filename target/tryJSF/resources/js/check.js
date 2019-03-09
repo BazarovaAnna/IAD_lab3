@@ -1,92 +1,27 @@
 function validation() {
-    let e = document.getElementById('form');
-    let stopSubmit = false;
-    let x = document.getElementById('trueX').value
-    let y = e.Y.value;
-    let r = e.R.value;
-    let msgy = '', msgr = '';
-    let arry = y.split('');
-    let arrr = r.split('');
 
-    let newY = y.replace(/,/g, '.');
-    document.getElementById('Y').value = newY;
-    y = e.Y.value;
-
-    let newR = r.replace(/,/g, '.');
-    document.getElementById('R').value = newR;
-    r = e.R.value;
-
-    if (isNaN(y) || y < -5 || y > 3 || y === " " || arry[0] === '.' || y === '') {
-        stopSubmit = true;
-        msgy += 'Input number between -5 and 3';
-        document.getElementById('errY').style.visibility = 'visible';
-        document.getElementById('errY').innerHTML = msgy;
-    }
-    if (isNaN(r) || r < 1 || r > 4 || r === " " || arrr[0] === '.' || r === '') {
-        stopSubmit = true;
-        msgr += 'Input number between 1 and 4';
-        document.getElementById('errR').style.visibility = 'visible';
-        document.getElementById('errR').innerHTML = msgr;
-    }
-    if (!stopSubmit) {
-        e.submit();
-        document.getElementById('resTable').style.display = "block";
-        drawPoint('graph', x, y, r);
-    }
 }
 
-function resetValidationY() {
-    document.getElementById('errY').style.visibility = 'hidden';
-    document.getElementById('errY').innerHTML = '123';
+function interract(){
+
 }
 
-function resetValidationR() {
-    document.getElementById('errR').style.visibility = 'hidden';
-    document.getElementById('errR').innerHTML = '123';
-}
-
-function interract() {
-    let canvas = document.getElementById("graph");
-    let event = window.event;
-    let pos = getMousePos(canvas, event);
-    let e = document.getElementById('form');
-
-    let r = e.R.value;
-    let newR = r.replace(/,/g, '.');
-    document.getElementById('R').value = newR;
-    let arrr = r.split('');
-
-    let msgr = '';
-
-    if (isNaN(r) || r < 1 || r > 3 || r === " " || arrr[0] === '.' || r === '') {
-        msgr += 'Input number between 1 and 3';
-        document.getElementById('errR').style.visibility = 'visible';
-        document.getElementById('errR').innerHTML = msgr;
-    } else {
-        let x = Math.round(((pos.x - 200) * r) / 140 * 10) / 10;
-        let y = Math.round(((-pos.y + 200) * r) / 140 * 10) / 10;
-        document.getElementById('trueX').value = x;
-        e.Y.value = y;
-        validation();
-    }
-}
-
-function draw(canv, r) {
+function draw(canv) {
     let ctx = document.getElementById(canv).getContext("2d");
 
     ctx.clearRect(0, 0, 400, 400);
 //четверть круга
     ctx.beginPath();
     ctx.moveTo(200, 200);
-    ctx.arc(200, 200, 140, 2 * Math.PI, 3 * Math.PI / 2, true);
+    ctx.arc(200, 200, 140, 2 * Math.PI,  3*Math.PI/2, true);
     ctx.closePath();
     ctx.strokeStyle = "dodgerblue";
     ctx.fillStyle = "dodgerblue";
     ctx.fill();
     ctx.stroke();
-//прямоугольник
+//квадрат
     ctx.beginPath();
-    ctx.rect(130, 60, 70, 140);
+    ctx.rect(60, 60, 140, 140);
     ctx.closePath();
     ctx.strokeStyle = "dodgerblue";
     ctx.fillStyle = "dodgerblue";
@@ -94,10 +29,10 @@ function draw(canv, r) {
     ctx.stroke();
 //треугольник
     ctx.beginPath();
-    ctx.moveTo(60, 200);
+    ctx.moveTo(200, 200);
+    ctx.lineTo(270, 200);
+    ctx.lineTo(200, 270);
     ctx.lineTo(200, 200);
-    ctx.lineTo(200, 340);
-    ctx.lineTo(60, 200);
     ctx.closePath();
     ctx.strokeStyle = "dodgerblue";
     ctx.fillStyle = "dodgerblue";
@@ -161,6 +96,7 @@ function draw(canv, r) {
 }
 
 
+
 window.onkeydown = function (e) {
     let code = e.key;
     if (code === 'Enter') {
@@ -176,25 +112,7 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function validationR() {
-    let e = document.getElementById('form');
-    let r = e.R.value;
-    let newR = r.replace(/,/g, '.');
-    document.getElementById('R').value = newR;
-    r = e.R.value;
 
-    let arrr = r.split('');
-
-    let msgr = '';
-
-    if (isNaN(r) || r < 1 || r > 4 || r === " " || arrr[0] === '.' || r === '') {
-        msgr += 'Input number between 1 and 4';
-        document.getElementById('errR').style.visibility = 'visible';
-        document.getElementById('errR').innerHTML = msgr;
-        return false
-    } else draw('graph', r);
-    return true;
-}
 
 
 function drawPoint(canv, x, y, r) {
@@ -219,7 +137,8 @@ function drawPoint(canv, x, y, r) {
     ctx.stroke();//to have dif colors with this code nothing was checked
 
     if (r < 1 || r > 4) {
-    } else {
+    }
+    else {
         if (Math.abs(x / r) > 1.2 || Math.abs(y / r) > 1.2) {
             ctx.font = "14px Times New Roman";
             ctx.fillText('Some of points are out of the graph', 130, 390);
@@ -227,15 +146,15 @@ function drawPoint(canv, x, y, r) {
             ctx.beginPath();
             ctx.arc(Math.round(200 + ((x / r) * 140)), Math.round(200 - ((y / r) * 140)), 3, 0, Math.PI * 2);
             ctx.closePath();
-            if ((x >= 0 && y >= 0 && (x * x + y * y) <= r * r) ||
-                (x <= 0 && y >= 0 && Math.abs(x) <= (r / 2) && y <= r) ||
-                (x <= 0 && y <= 0 && y >= -x - r)
-            ) {//костыль для зеленых точек
+            if (    (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
+                (x <= 0 && y >= 0 && Math.abs(x)<=(r/2) && y<=r) ||
+                (x <= 0 && y <= 0 && y>=-x-r)
+            ){//костыль для зеленых точек
                 ctx.strokeStyle = "green";
                 ctx.fillStyle = "green";
                 ctx.fill();
                 ctx.stroke();
-            } else {
+            }else{
                 ctx.strokeStyle = "red";
                 ctx.fillStyle = "red";
                 ctx.fill();
@@ -243,8 +162,4 @@ function drawPoint(canv, x, y, r) {
             }
         }
     }
-}
-
-function setX() {
-    document.getElementById('trueX').value = document.getElementById('X').value;
 }
