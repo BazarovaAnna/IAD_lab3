@@ -57,7 +57,7 @@ public class Point implements Serializable {
             return;
         }
         if ((x >= 0 && y >= 0 && (x * x + y * y) <= r * r) ||
-                (x < r && y < r && y >= 0 && x < 0) ||
+                (x >-r && y < r && y >= 0 && x < 0) ||
                 (x > 0 && y < 0 && y > x - r / 2)
         ) {
             this.hit = true;
@@ -70,6 +70,7 @@ public class Point implements Serializable {
             return "";
         } else {
             this.setHit();
+
             return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y + "\nhit: " + hit;
         }
     }

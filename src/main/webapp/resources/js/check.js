@@ -109,14 +109,6 @@ function getMousePos(canvas, evt) {
     };
 }
 
-window.onkeydown = function (e) {
-    let code = e.key;
-
-    if (code === 'Enter') {
-        validation('${Point.x}','${Point.y}','${Point.r}');
-    }
-};
-
 function drawPoint(canv, x, y, r) {
     let ctx = document.getElementById(canv).getContext("2d");
     ctx.beginPath();
@@ -148,7 +140,7 @@ function drawPoint(canv, x, y, r) {
             ctx.arc(Math.round(200 + ((x / r) * 140)), Math.round(200 - ((y / r) * 140)), 3, 0, Math.PI * 2);
             ctx.closePath();
             if ((x >= 0 && y >= 0 && (x * x + y * y) <= r * r) ||
-                (x < r && y < r && y >= 0 && x < 0) ||
+                (x > -r && y < r && y >= 0 && x < 0) ||
                 (x > 0 && y < 0 && y > x - r / 2)
             ) {//костыль для зеленых точек
                 ctx.strokeStyle = "green";
