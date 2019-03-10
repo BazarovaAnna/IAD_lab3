@@ -28,7 +28,9 @@ public class Point implements Serializable {
         return r;
     }
 
-    public Boolean getHit() { return hit; }
+    public Boolean getHit() {
+        return hit;
+    }
 
     public void setX(String x) {
         this.x = x;
@@ -42,7 +44,7 @@ public class Point implements Serializable {
         this.r = r;
     }
 
-    public void setHit(){
+    public void setHit() {
         double x;
         double y;
         double r;
@@ -51,13 +53,13 @@ public class Point implements Serializable {
             y = Double.parseDouble(this.y.replace(',', '.'));
             r = Double.parseDouble(this.r.replace(',', '.'));
         } catch (Exception e) {
-            this.hit= false;
+            this.hit = false;
             return;
         }
-        if (    (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
-                (x <= 0 && y >= 0 && Math.abs(x)<=(r/2) && y<=r) ||
-                (x <= 0 && y <= 0 && y>=-x-r)
-        ){
+        if ((x >= 0 && y >= 0 && (x * x + y * y) <= r * r) ||
+                (x < r && y < r && y >= 0 && x < 0) ||
+                (x > 0 && y < 0 && y > x - r / 2)
+        ) {
             this.hit = true;
         } else this.hit = false;
     }
@@ -68,7 +70,7 @@ public class Point implements Serializable {
             return "";
         } else {
             this.setHit();
-            return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y+"\nhit: "+hit;
+            return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y + "\nhit: " + hit;
         }
     }
 

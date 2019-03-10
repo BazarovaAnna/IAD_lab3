@@ -1,30 +1,15 @@
-function validation(x,y,r) {
-    let newy=y.replace(/,/g, '.');
-    let newx=x.replace(/,/g, '.');
-    let newr=r.replace(/,/g, '.');
-    drawPoint('graph', newx, newy, newr);
+function validation(x, y, r) {
+
+    drawPoint('graph', x, y, r);
 }
 
-function interract(r){
+function interract(r) {
     let canvas = document.getElementById("graph");
     let event = window.event;
     let pos = getMousePos(canvas, event);
-
-    let newR = r.replace(/,/g, '.');
-    document.getElementById('R').value = newR;
-    let arrr = r.split('');
-
-    let msgr = '';
-
-    if (isNaN(r) || r < 1 || r > 3 || r === " " || arrr[0] === '.' || r === '') {
-        msgr += 'Input number between 1 and 3';
-        document.getElementById('errR').style.visibility = 'visible';
-        document.getElementById('errR').innerHTML = msgr;
-    } else {
-        let x = Math.round(((pos.x - 200) * r) / 140 * 10) / 10;
-        let y = Math.round(((-pos.y + 200) * r) / 140 * 10) / 10;
-        validation(x,y,r);
-    }
+    let x = Math.round(((pos.x - 200) * r) / 140 * 10) / 10;
+    let y = Math.round(((-pos.y + 200) * r) / 140 * 10) / 10;
+    validation(x, y, r);
 }
 
 function draw(canv) {
@@ -34,7 +19,7 @@ function draw(canv) {
 //четверть круга
     ctx.beginPath();
     ctx.moveTo(200, 200);
-    ctx.arc(200, 200, 140, 2 * Math.PI,  3*Math.PI/2, true);
+    ctx.arc(200, 200, 140, 2 * Math.PI, 3 * Math.PI / 2, true);
     ctx.closePath();
     ctx.strokeStyle = "dodgerblue";
     ctx.fillStyle = "dodgerblue";
@@ -124,6 +109,14 @@ function getMousePos(canvas, evt) {
     };
 }
 
+window.onkeydown = function (e) {
+    let code = e.key;
+
+    if (code === 'Enter') {
+        validation('${Point.x}','${Point.y}','${Point.r}');
+    }
+};
+
 function drawPoint(canv, x, y, r) {
     let ctx = document.getElementById(canv).getContext("2d");
     ctx.beginPath();
@@ -146,8 +139,7 @@ function drawPoint(canv, x, y, r) {
     ctx.stroke();//to have dif colors with this code nothing was checked
 
     if (r < 1 || r > 4) {
-    }
-    else {
+    } else {
         if (Math.abs(x / r) > 1.2 || Math.abs(y / r) > 1.2) {
             ctx.font = "14px Times New Roman";
             ctx.fillText('Some of points are out of the graph', 130, 390);
@@ -155,15 +147,15 @@ function drawPoint(canv, x, y, r) {
             ctx.beginPath();
             ctx.arc(Math.round(200 + ((x / r) * 140)), Math.round(200 - ((y / r) * 140)), 3, 0, Math.PI * 2);
             ctx.closePath();
-            if (     (x >= 0 && y >= 0 && (x*x+y*y)<=r*r) ||
-                (x <= 0 && y >= 0 && Math.abs(x)<=(r/2) && y<=r) ||
-                (x <= 0 && y <= 0 && y>=-x-r)
-            ){//костыль для зеленых точек
+            if ((x >= 0 && y >= 0 && (x * x + y * y) <= r * r) ||
+                (x < r && y < r && y >= 0 && x < 0) ||
+                (x > 0 && y < 0 && y > x - r / 2)
+            ) {//костыль для зеленых точек
                 ctx.strokeStyle = "green";
                 ctx.fillStyle = "green";
                 ctx.fill();
                 ctx.stroke();
-            }else{
+            } else {
                 ctx.strokeStyle = "red";
                 ctx.fillStyle = "red";
                 ctx.fill();

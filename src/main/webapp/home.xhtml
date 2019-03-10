@@ -9,7 +9,6 @@
     <title>Lab3 JSF Application</title>
     <link href="resources/css/Style.css" rel="stylesheet"> </link>
     <h:outputScript library="js" name="check.js"/>
-    <h:outputScript name="clock.js" library="js"/>
 </head>
 
 <h:body>
@@ -74,12 +73,20 @@
                                     <span class="whitespace">    </span>
                                 </h:selectOneRadio>
 
-                                <h:commandButton value="Get my coords!" onclick="validation('${Point.x}','${Point.y}','${Point.r}')">
+                                <h:commandButton value="Get my coords!" onclick="validation('${Point.x}','${Point.y}','${Point.r}');">
                                     <f:ajax render="output"/>
                                 </h:commandButton>
                                 <h2>
                                     <h:outputText id="output" value="#{Point.showCurrent}"/>
                                 </h2>
+                                <script>
+                                    window.onkeydown = function (e) {
+                                        let code = e.key;
+                                        if (code === 'Enter') {
+                                            validation('${Point.x}','${Point.y}','${Point.r}');
+                                        }
+                                    };
+                                </script>
                             </td>
                         </tr>
                     </table>
