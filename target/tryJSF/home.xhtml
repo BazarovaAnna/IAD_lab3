@@ -8,6 +8,7 @@
 <head>
     <title>Lab3 JSF Application</title>
     <link href="resources/css/Style.css" rel="stylesheet"> </link>
+    <h:outputScript name="jquery.js" library="js"/>
     <h:outputScript library="js" name="check.js"/>
 </head>
 
@@ -77,6 +78,7 @@
                                 <h2>
                                     <h:outputText id="output" value="#{Point.showCurrent}"/>
                                 </h2>
+                                <div id="errR"></div>
                                 <script>
                                     window.onkeydown = function (e) {
                                         let code = e.key;

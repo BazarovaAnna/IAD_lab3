@@ -1,9 +1,10 @@
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 
 @ManagedBean(name = "Point")
-@SessionScoped
+@RequestScoped
 public class Point implements Serializable {
     private String r;
     private String x;
@@ -70,7 +71,7 @@ public class Point implements Serializable {
             return "";
         } else {
             this.setHit();
-
+            //session.get("points").addResult(this);
             return "Ajax message : Welcome, friend! Your data is: \nR: " + r + "\nX: " + x + "\nY: " + y + "\nhit: " + hit;
         }
     }

@@ -16,6 +16,16 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>DBManager</servlet-name>
+        <servlet-class>DBManager</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DBManager</servlet-name>
+        <url-pattern>/PointsDB</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
