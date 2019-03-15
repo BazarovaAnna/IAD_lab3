@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -39,14 +38,14 @@
                                     <f:selectItem itemValue="3" itemLabel="3"/>
                                     <span class="whitespace">    </span>
                                 </h:selectOneRadio>
-                                <input class="text" readonly="readonly" id="trueX" name="X" style="visibility: hidden; display: none" value="0">  </input>
-                            </td>
+                                </td>
 
                             <td rowspan="2">
                                 <!--здесь будет канвас-->
-                                <canvas height="400" width="400" id="graph" name="graph" onclick="interract('${Point.r}')" class="graph"/>
+                                <canvas height="400" width="400" id="graph" onclick="interract('${Point.r}'); drawAll('${Point.r}')" class="graph"/>
                                 <script>window.onload = function (ev) {
                                     draw('graph');
+                                    drawAll('${Point.r}');
                                 }</script>
                             </td>
                         </tr>
@@ -71,14 +70,10 @@
                                     <f:selectItem itemValue="3" itemLabel="3"/>
                                     <span class="whitespace">    </span>
                                 </h:selectOneRadio>
+                                <button onclick="validation('${Point.x}','${Point.y}','${Point.r}');">
+                                    Кнопка
+                                </button>
 
-                                <h:commandButton value="Get my coords!" onclick="validation('${Point.x}','${Point.y}','${Point.r}');">
-                                    <f:ajax render="output"/>
-                                </h:commandButton>
-                                <h2>
-                                    <h:outputText id="output" value="#{Point.showCurrent}"/>
-                                </h2>
-                                <div id="errR"></div>
                                 <script>
                                     window.onkeydown = function (e) {
                                         let code = e.key;
@@ -103,7 +98,33 @@
             </td>
         </tr>
         <tr><td>
+            <!--AllResults - get list of all points-->
 
+            <h:dataTable value="#{Point.allResults}" var="result"
+                         styleClass="article-table"
+                         rules="all" id="result-table">
+                <h:column>
+                    <f:facet name="header">X </f:facet>
+                    #{result.x}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Y </f:facet>
+                    #{result.y}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">R </f:facet>
+                    #{result.r}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Попадание </f:facet>
+                    <h:panelGroup rendered="#{result.hit}">
+                        <span id="yes">да</span>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{!result.hit}">
+                        <span id="no">нет</span>
+                    </h:panelGroup>
+                </h:column>
+            </h:dataTable>
 
         </td></tr>
     </table>

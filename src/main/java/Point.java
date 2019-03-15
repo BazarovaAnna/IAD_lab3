@@ -1,7 +1,7 @@
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 
 @ManagedBean(name = "Point")
 @RequestScoped
@@ -45,6 +45,9 @@ public class Point implements Serializable {
         this.r = r;
     }
 
+    public void setHit(Boolean h) {
+        this.hit=h;
+    }
     public void setHit() {
         double x;
         double y;
@@ -98,6 +101,7 @@ public class Point implements Serializable {
                                 if (("".equals(y) || y == null)) {
                                     return "R: " + r + "\nX: " + x;
                                 } else {
+
                                     return getSayCoords();
                                 }
                             }
@@ -106,5 +110,9 @@ public class Point implements Serializable {
                 }
             }
         }
+    }
+
+    public List<Point> getAllResults() {
+        return PointsDB.selectAll();
     }
 }

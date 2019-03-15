@@ -1,8 +1,10 @@
 function validation(x, y, r) {
     //put entering to db
-
+    if (x!=null&&y!=null&&r!=null){
     $.get('PointsDB',{xvalue:x,yvalue:y,rvalue:r}, function(data) {
-    });
+    });}
+    window.location.reload(true);
+    drawAll(r);
     drawPoint('graph', x, y, r);
 }
 
@@ -111,7 +113,16 @@ function getMousePos(canvas, evt) {
         y: evt.clientY - rect.top
     };
 }
+function drawAll(r) {
+    let values = $("#result-table td").toArray();
+    for (let i = 0; i < values.length / 4; ++i) {
+        drawPoint("graph",
+            values[i * 4].innerText,
+            values[i * 4 + 1].innerText,
+            r);
+    }
 
+}
 function drawPoint(canv, x, y, r) {
     let ctx = document.getElementById(canv).getContext("2d");
     ctx.beginPath();
@@ -159,3 +170,4 @@ function drawPoint(canv, x, y, r) {
         }
     }
 }
+

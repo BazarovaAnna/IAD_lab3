@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PointsDB {
     static {
@@ -96,10 +98,11 @@ public class PointsDB {
             System.exit(0);
         }
     }
-    public static void selectAll(){
+    public static List<Point> selectAll(){
 
         Connection c;
         Statement stmt;
+        List<Point> lst=new ArrayList<Point>();
 
         try {
             c = DriverManager
@@ -111,13 +114,22 @@ public class PointsDB {
         //--------------- SELECT DATA ------------------
         stmt = c.createStatement();
         ResultSet rs = stmt.executeQuery( "SELECT * FROM Points;" );
+
         while ( rs.next() ) {
             int id = rs.getInt("ID");
             String x = rs.getString("Xvalue");
             String y = rs.getString("Yvalue");
             String r = rs.getString("Rvalue");
-            String hit = rs.getString("Match");
-            System.out.println(String.format("ID=%s X=%s Y=%s R=%s Hit=%s",id,x,y,r,hit));
+            Boolean hit = Boolean.parseBoolean(rs.getString("Match"));
+
+            System.out.println("X = "+x+"; Y = "+y+"; R = "+r+"; Match: "+hit+";");
+            Point p=new Point();
+            p.setY(y);
+            p.setR(r);
+            p.setX(x);
+            p.setHit(hit);
+
+            lst.add(p);
         }
         rs.close();
         stmt.close();
@@ -125,10 +137,12 @@ public class PointsDB {
         System.out.println("-- Operation SELECT done successfully");
 
         c.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
+        return lst;
     }
 }
