@@ -1,8 +1,7 @@
 function validation(x, y, r) {
     //put entering to db
 
-    $.get('PointsDB', function(data) {
-        alert(data);
+    $.get('PointsDB',{xvalue:x,yvalue:y,rvalue:r}, function(data) {
     });
     drawPoint('graph', x, y, r);
 }

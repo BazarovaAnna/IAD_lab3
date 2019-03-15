@@ -1,12 +1,18 @@
 import java.sql.*;
 
 public class PointsDB {
+    static {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public static void createDB(){
         Connection c;
         Statement stmt;
 
         try {
-        Class.forName("org.postgresql.Driver");
         c = DriverManager
                 .getConnection("jdbc:postgresql://localhost:5432/","postgres", "POIUYtrewq12345");
         c.setAutoCommit(false);
@@ -45,7 +51,6 @@ public class PointsDB {
         Statement stmt;
 
         try {
-            Class.forName("org.postgresql.Driver");
             c = DriverManager
                     .getConnection("jdbc:postgresql://localhost:5432/","postgres", "POIUYtrewq12345");
             c.setAutoCommit(false);
@@ -70,7 +75,6 @@ public class PointsDB {
         Statement stmt;
 
         try {
-            Class.forName("org.postgresql.Driver");
             c = DriverManager
                     .getConnection("jdbc:postgresql://localhost:5432/","postgres", "POIUYtrewq12345");
             c.setAutoCommit(false);
@@ -98,7 +102,6 @@ public class PointsDB {
         Statement stmt;
 
         try {
-            Class.forName("org.postgresql.Driver");
             c = DriverManager
                     .getConnection("jdbc:postgresql://localhost:5432/","postgres", "POIUYtrewq12345");
             c.setAutoCommit(false);
